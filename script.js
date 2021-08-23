@@ -1,35 +1,37 @@
-var slides = document.querySelectorAll('#slides .slide');
-var currentSlide = 0;
-var slideInterval = setInterval(nextSlide,4000);
+const slides = document.querySelectorAll('#slides .slide');
+const slides_amount = slides.length;
+const slider_btns_area = document.querySelector('.main-slider-switch');
+const interval = 4000
 
-function nextSlide(){
-  slides[currentSlide].className = 'slide';
-  currentSlide = (currentSlide+1)%slides.length;
-  slides[currentSlide].className = 'slide showing';
+let currentSlide = 0;
+let slideInterval = setInterval(nextSlide, interval);
+
+for (let i = 0; i < slides_amount; i++) {
+  let btn = document.createElement('div');
+  btn.className = 'main-slider-switch-item w-14 h-1 bg-white cursor-pointer ml-4 rounded';
+  if (i == 0) btn.className += ' active';
+  btn.addEventListener('click', () => {
+    clearInterval(slideInterval);
+    hideSlide(currentSlide);
+    currentSlide = i;
+    showSlide(currentSlide);
+    slideInterval = setInterval(nextSlide, interval);
+  })
+  slider_btns_area.append(btn);
 }
 
+const slider_btns = document.querySelectorAll('.main-slider-switch-item');
 
-var mainSliderSwitchItem1 = documebt.getElementById('main-slider-switch-item1')
-var mainSliderSwitchItem2 = documebt.getElementsByClassName('main-slider-switch-item2')
-
-mainSliderSwitchItem1.onclick = showCurSlide();
-mainSliderSwitchItem1.onclick = showCurSlide();
-
-function showCurSlide () {
-  // slides[n].className = 'slide'
-  alert('саси');
+function hideSlide(idx) {
+  slides[idx].classList.remove('showing');
+  slider_btns[idx].classList.remove('active');
 }
-
-document.getElementsByClassName('main-slider-switch-item').onclick = function () {
-  showCurSlide (n);
+function showSlide(idx) {
+  slides[idx].classList.add('showing');
+  slider_btns[idx].classList.add('active');
 }
-
-
-
-import { createApp } from 'vue'
-import App from './App.vue'
-import './index.css'
-
-createApp(App).mount('#app')
-
-import "tailwindcss/tailwind.css"
+function nextSlide() {
+  hideSlide(currentSlide);
+  currentSlide = (currentSlide + 1) % slides_amount;
+  showSlide(currentSlide);
+}
