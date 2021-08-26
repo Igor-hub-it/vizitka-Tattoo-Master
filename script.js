@@ -8,7 +8,7 @@ let slideInterval = setInterval(nextSlide, interval);
 
 for (let i = 0; i < slides_amount; i++) {
   let btn = document.createElement('div');
-  btn.className = 'main-slider-switch-item w-14 h-1 bg-white cursor-pointer ml-4 rounded';
+  btn.className = 'main-slider-switch-item w-14 h-1 bg-gray-400 cursor-pointer ml-4 rounded';
   if (i == 0) btn.className += ' active';
   btn.addEventListener('click', () => {
     clearInterval(slideInterval);
